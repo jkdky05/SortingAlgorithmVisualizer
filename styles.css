@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  background: linear-gradient(
+    rgba(44, 45, 46, 0.4),
+    rgba(44, 45, 46, 0.3),
+    rgba(44, 45, 46, 0.3)
+  );
+  min-height: 100%;
+}
+
+header {
+  font: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+  margin: 0.5rem 0;
+}
+
+label {
+  font: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+  margin-bottom: 5px;
+}
+
+#input {
+  display: flex;
+  justify-content: center;
+}
+
+ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  background-color: rgb(163, 221, 231);
+  margin: 2rem;
+  padding-left: 1px;
+  min-height: 25rem;
+  min-width: 10px;
+  height: 25rem;
+  align-items: flex-end;
+  border: solid black 1px;
+  box-shadow: -10px 5px 3px rgb(112, 107, 107);
+  /* flex-wrap: nowrap; */
+}
+
+li {
+  display: flex;
+  background-color: tomato;
+  margin-right: 2px;
+  border: solid 1px black;
+  flex: 1;
+  /* max-width: 3px; */
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+  border-bottom: transparent;
+  text-align: center;
+}
+
+button {
+  border: none;
+  background-color: tomato;
+  margin: 1rem;
+  font-size: 1.5rem;
+  color: white;
+  padding: 0.5rem;
+  transition: all 0.2s ease 0.2s;
+}
+
+button:hover {
+  border: none;
+  background-color: rgb(168, 79, 63);
+  transform: scale(1.25);
+  transform: skew(15deg, -15deg);
+  border-radius: 1rem;
+}

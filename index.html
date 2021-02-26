@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <header>Algorithm Visualizer</header>
+    <section id="app">
+      <div id="input">
+        <label for="numberItem">Number of Items: {{ numberItems}}</label>
+        <input
+          type="range"
+          min="2"
+          max="200"
+          step="1"
+          v-model="numberItems"
+          id="numberItem"
+          v-on:input="reset"
+        />
+        <label for="speedSlider">Speed Slider</label>
+        <input
+          type="range"
+          min="0"
+          max="400"
+          step="10"
+          v-model="speed"
+          id="speedSlider"
+        />
+        <!-- <input
+          type="text"
+          v-bind:value="numberItems"
+          v-on:input="numberItems = $event.target.value"
+          v-on:keyup.delete="reset"
+        /> -->
+      </div>
+      <ul>
+        <li v-for="item in list">{{item}}</li>
+      </ul>
+      <p>{{ list }}</p>
+      <button v-on:click="algorithmChosen = Quicksort">QuickSort</button>
+      <button v-on:click="sort">ORDENAR</button>
+    </section>
+  </body>
+</html>
