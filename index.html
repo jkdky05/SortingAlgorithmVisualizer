@@ -32,19 +32,15 @@
           v-model="speed"
           id="speedSlider"
         />
-        <!-- <input
-          type="text"
-          v-bind:value="numberItems"
-          v-on:input="numberItems = $event.target.value"
-          v-on:keyup.delete="reset"
-        /> -->
       </div>
       <ul>
         <li v-for="item in list">{{item}}</li>
       </ul>
       <p>{{ list }}</p>
-      <button v-on:click="algorithmChosen = Quicksort">QuickSort</button>
-      <button v-on:click="sort">ORDENAR</button>
+      <button v-on:click="algorithmChosen='bogoSort'">BogoSort</button>
+      <button v-on:click="algorithmChosen='bubbleSort'">BubbleSort</button>
+      <button v-on:click="algorithmChosen='quickSort'">QuickSort</button>
+      <button v-on:click="sort">Sort</button>
     </section>
   </body>
 </html>
