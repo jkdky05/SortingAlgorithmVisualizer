@@ -10,28 +10,30 @@
     <title>Document</title>
   </head>
   <body>
-    <header>Algorithm Visualizer</header>
     <section id="app">
-      <div id="input">
-        <label for="numberItem">Number of Items: {{ numberItems}}</label>
-        <input
-          type="range"
-          v-bind:min="limitNumbers.min"
-          v-bind:max="limitNumbers.max"
-          step="1"
-          v-model="numberItems"
-          id="numberItem"
-        />
-        <label for="speedSlider">Speed Slider</label>
-        <input
-          type="range"
-          min="0"
-          max="400"
-          step="10"
-          v-model="speed"
-          id="speedSlider"
-        />
-      </div>
+      <header>
+        <h1>Algorithm Visualizer</h1>
+        <div id="input">
+          <label for="numberItem">Number of Items: {{ numberItems}}</label>
+          <input
+            type="range"
+            v-bind:min="limitNumbers.min"
+            v-bind:max="limitNumbers.max"
+            step="1"
+            v-model="numberItems"
+            id="numberItem"
+          />
+          <label for="speedSlider">Speed Slider</label>
+          <input
+            type="range"
+            min="0"
+            max="400"
+            step="10"
+            v-model="speed"
+            id="speedSlider"
+          />
+        </div>
+      </header>
       <ul>
         <li v-for="item in list">{{item}}</li>
       </ul>
@@ -39,6 +41,7 @@
       <button v-on:click="algorithmChosen='bogoSort'">BogoSort</button>
       <button v-on:click="algorithmChosen='bubbleSort'">BubbleSort</button>
       <button v-on:click="algorithmChosen='quickSort'">QuickSort</button>
+      <button v-on:click="algorithmChosen='mergeSort'">MergeSort</button>
       <button v-on:click="sort">Sort</button>
     </section>
   </body>
