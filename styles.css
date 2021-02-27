@@ -35,6 +35,12 @@ label {
   justify-content: center;
 }
 
+#numberItem {
+  width: 20rem;
+  margin-right: 10rem;
+  margin-left: 2rem;
+}
+
 ul {
   display: flex;
   justify-content: center;
@@ -63,6 +69,13 @@ li {
   font-family: 'Courier New', Courier, monospace;
   border-bottom: transparent;
   text-align: center;
+}
+
+p {
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+  background: rgb(95, 88, 87);
+  border: solid 1px black;
 }
 
 button {

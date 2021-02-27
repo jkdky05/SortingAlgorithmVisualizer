@@ -16,12 +16,11 @@
         <label for="numberItem">Number of Items: {{ numberItems}}</label>
         <input
           type="range"
-          min="2"
-          max="200"
+          v-bind:min="limitNumbers.min"
+          v-bind:max="limitNumbers.max"
           step="1"
           v-model="numberItems"
           id="numberItem"
-          v-on:input="reset"
         />
         <label for="speedSlider">Speed Slider</label>
         <input
