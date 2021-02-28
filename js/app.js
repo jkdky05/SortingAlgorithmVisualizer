@@ -3,7 +3,7 @@ const app = Vue.createApp({
     return {
       list: [],
       numberItems: 0,
-      algorithmChosen: 'quickSort',
+      algorithmChosen: '',
       speed: 200,
       limitNumbers: {
         min: 2,
@@ -30,7 +30,7 @@ const app = Vue.createApp({
     algorithmChosen() {
       switch (this.algorithmChosen) {
         case 'bogoSort':
-          this.limitNumbers.max = 7;
+          this.limitNumbers.max = 6;
           this.numberItems = 5;
           break;
         case 'bubbleSort':
@@ -123,7 +123,6 @@ const app = Vue.createApp({
 
     keepPivots() {
       const columns = document.querySelectorAll('li');
-      /* console.log('setHeightAndWidthAndBackGroundColumns'); */
       columns.forEach((element) => {
         if (element.style.background !== 'none white')
           element.style.background = `rgb(255, 81, 0)`;
@@ -194,15 +193,6 @@ const app = Vue.createApp({
         );
         console.log(stepCounter.counter);
         await this.sleep(200 - (this.speed - 200));
-        /* await Promise.all([
-          this.quickSort(
-            array,
-            first,
-            indexPartition - 1,
-            indexPivot - stepCounter.counter - 1
-          ),
-          await this.quickSort(array, indexPartition + 1, last, indexPivot),
-        ]); */
 
         await this.quickSort(
           array,

@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="shortcut icon" type="image/jpg" href="./icons/favicon.ico" />
     <script src="https://unpkg.com/vue@next" defer></script>
-    <script src="app.js" defer></script>
-    <title>Document</title>
+    <script src="./js/app.js" defer></script>
+    <title>Algorithm Visualizer</title>
   </head>
   <body>
-    <section id="app">
+    <div id="app">
       <header>
         <h1>Algorithm Visualizer</h1>
         <div id="input">
@@ -32,17 +33,20 @@
             v-model="speed"
             id="speedSlider"
           />
-        </div>
+        
       </header>
       <ul>
         <li v-for="item in list">{{item}}</li>
       </ul>
-      <p>{{ list }}</p>
+      <p id="array">{{ list }}</p>
+    <section id="button-section">
       <button v-on:click="algorithmChosen='bogoSort'">BogoSort</button>
       <button v-on:click="algorithmChosen='bubbleSort'">BubbleSort</button>
       <button v-on:click="algorithmChosen='quickSort'">QuickSort</button>
       <button v-on:click="algorithmChosen='mergeSort'">MergeSort</button>
-      <button v-on:click="sort">Sort</button>
-    </section>
+      <button v-on:click="sort" id="sortButton">Sort Array</button>
+      </section>
+    </div>
+    </div>
   </body>
 </html>
