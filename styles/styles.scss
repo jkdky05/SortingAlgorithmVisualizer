@@ -1,16 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+
+$imported-font: 'Roboto Slab', serif;
+$background-color-header-buttons: #380606;
+$typical-border: solid 1px black;
 
 * {
   box-sizing: border-box;
+  user-select: none;
 }
 
 body {
   margin: 0;
-  background: linear-gradient(
-    rgba(44, 45, 46, 0.4),
-    rgba(44, 45, 46, 0.3),
-    rgba(44, 45, 46, 0.3)
-  );
+  background-color: #b5b5b6;
 }
 
 #app {
@@ -20,140 +21,164 @@ body {
     'columns columns columns'
     'array array array'
     'buttons buttons buttons';
-  /* animation: fadein 1.5s linear; */
+
+  height: calc(var(--vh, 1vh) * 100);
+  grid-auto-rows: 1fr 7fr 1fr 1fr;
 
   header {
     grid-area: header;
-    margin: 0;
+    text-shadow: 5px 5px 0 rgb(0, 0, 0);
+    background: $background-color-header-buttons;
+    border-bottom: $typical-border;
 
-    background: rgb(27, 61, 124);
-    border-bottom: solid black 1px;
-  }
+    h1 {
+      text-align: center;
+      font-family: $imported-font;
+      color: white;
+    }
 
-  h1 {
-    font-size: 2rem;
-    text-align: center;
-    font-family: 'DotGothic16', sans-serif;
-    color: white;
-    margin: 0.5rem 0;
-  }
+    label {
+      font-size: 1.5rem;
+      text-align: center;
+      font-family: $imported-font;
+      color: white;
+      margin-bottom: 5px;
+    }
 
-  label {
-    font: bold;
-    font-size: 1.5rem;
-    text-align: center;
-    font-family: 'DotGothic16', sans-serif;
-    color: white;
-    margin-bottom: 5px;
-  }
+    #input {
+      display: flex;
+      justify-content: center;
 
-  #input {
-    display: flex;
-    justify-content: center;
-  }
+      #numberItem {
+        width: 20rem;
+        margin-right: 5rem;
+        margin-left: 2rem;
+      }
 
-  #numberItem {
-    width: 20rem;
-    margin-right: 5rem;
-    margin-left: 2rem;
+      #speedSlider {
+        width: 20rem;
+        margin-right: 5rem;
+        margin-left: 2rem;
+      }
+    }
   }
 
   ul {
     display: flex;
     justify-content: center;
     grid-area: columns;
-    list-style: none;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(238, 217, 217);
     margin: 2rem;
-    padding-left: 1px;
-    min-height: 25rem;
-    min-width: 10px;
-    max-width: 95%;
-    height: 25rem;
+    padding-left: 0;
     align-items: flex-end;
-    border: solid black 1px;
+    border: $typical-border;
     box-shadow: -10px 5px 3px rgb(112, 107, 107);
-    /* flex-wrap: nowrap; */
-  }
 
-  #button-section {
-    grid-area: buttons;
-    display: flex;
-    background-color: rgb(27, 61, 124);
-    border-top: solid 1px black;
-    border-bottom: solid 1px black;
-  }
-
-  #sortButton {
-    background-color: rgb(251, 251, 251);
-    padding: 0 2rem;
+    li {
+      display: flex;
+      flex: 1;
+      background: rgb(207, 125, 87);
+      margin-right: 2px;
+      justify-content: center;
+      color: rgb(255, 255, 255);
+      font-family: $imported-font;
+      width: 0;
+    }
   }
 
   #array {
     grid-area: array;
     margin: 0;
-    border-top: solid 1px black;
+    border-top: $typical-border;
+
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background: rgb(110, 138, 101);
+    border: $typical-border;
   }
 
-  #sortButton:hover {
-    background-color: rgb(0, 0, 0);
-  }
-
-  li {
+  #button-section {
+    grid-area: buttons;
     display: flex;
-    background: rgb(255, 81, 0);
-    margin-right: 2px;
-    border: solid 1px black;
-    flex: 1;
+    background-color: $background-color-header-buttons;
+    border-top: $typical-border;
+    border-bottom: $typical-border;
+    flex-wrap: wrap;
 
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
-    border-bottom: transparent;
-    text-align: center;
-  }
+    justify-content: space-evenly;
 
-  p {
-    font-family: 'Courier New', Courier, monospace;
-    color: white;
-    background: rgb(95, 88, 87);
-    border: solid 1px black;
-  }
+    button {
+      background-color: rgb(236, 225, 225);
+      margin: 1rem;
+      font-size: 1.5rem;
+      flex-grow: 1;
+      color: rgb(0, 0, 0);
+      font-family: $imported-font;
+      padding: 0.5rem;
+      transition: all 0.1s ease 0.1s;
+      border: none;
 
-  button {
-    border: solid 1px black;
-    background-color: rgb(236, 225, 225);
-    margin: 1rem;
-    font-size: 1.5rem;
-    color: rgb(0, 0, 0);
-    font-family: 'DotGothic16', sans-serif;
-    padding: 0.5rem;
-    transition: all 0.1s ease 0.1s;
-  }
+      &:hover {
+        background-color: rgb(173, 58, 58);
+        color: white;
+      }
 
-  button:hover {
-    background-color: rgb(0, 0, 0);
-    color: white;
+      &:disabled {
+        background-color: rgb(192, 120, 120);
+        opacity: 0.7;
+        color: white;
+      }
+    }
+
+    #sortButton {
+      background-color: rgb(22, 70, 20);
+      /* font-weight: bolder; */
+      color: white;
+      border-radius: 2rem;
+      border-top-left-radius: 8rem;
+      border-top-right-radius: 2rem;
+      border-bottom-right-radius: 8rem;
+
+      &:hover,
+      &:disabled {
+        background-color: rgb(49, 134, 56);
+      }
+    }
+    .button-selected {
+      background-color: rgb(151, 59, 59);
+      color: white;
+    }
   }
 }
 
-/* @keyframes fadein {
-  0% {
-    opacity: 0.5;
-  }
+@media (max-width: 600px) {
+  #app {
+    header {
+      h1 {
+        font-size: 5rem;
+      }
 
-  25% {
-    opacity: 0.625;
-  }
+      label {
+        font-size: 4rem;
+      }
 
-  50% {
-    opacity: 0.75;
-  }
+      #input {
+        #numberItem {
+          width: 20rem;
+        }
 
-  75% {
-    opacity: 0.875;
-  }
-  100% {
-    opacity: 1;
+        #speedSlider {
+          width: 20rem;
+        }
+      }
+    }
+
+    #button-section {
+      button {
+        font-size: 4rem;
+        width: 44%;
+        flex: none;
+      }
+    }
   }
 }
- */

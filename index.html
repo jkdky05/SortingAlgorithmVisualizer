@@ -5,15 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/styles.css" />
+
     <link rel="shortcut icon" type="image/jpg" href="./icons/favicon.ico" />
     <script src="https://unpkg.com/vue@next" defer></script>
-    <script src="./js/app.js" defer></script>
-    <title>Algorithm Visualizer</title>
+    <script type="module" src="./js/app.js" defer></script>
+    <script src="./js/setFullHeight.js" defer></script>
+
+    <title>Sorting Algorithm Visualizer</title>
   </head>
+
   <body>
     <div id="app">
       <header>
-        <h1>Algorithm Visualizer</h1>
+        <h1>Sorting Algorithm Visualizer</h1>
+
         <div id="input">
           <label for="numberItem">Number of Items: {{ numberItems}}</label>
           <input
@@ -23,30 +28,59 @@
             step="1"
             v-model="numberItems"
             id="numberItem"
+            v-bind:disabled="isDisabled"
           />
           <label for="speedSlider">Speed Slider</label>
-          <input
-            type="range"
-            min="0"
-            max="400"
-            step="10"
-            v-model="speed"
-            id="speedSlider"
-          />
-        
+          <input type="range" min="0" max="400" step="10" v-model="speed" id="speedSlider" />
+        </div>
       </header>
       <ul>
         <li v-for="item in list">{{item}}</li>
       </ul>
       <p id="array">{{ list }}</p>
-    <section id="button-section">
-      <button v-on:click="algorithmChosen='bogoSort'">BogoSort</button>
-      <button v-on:click="algorithmChosen='bubbleSort'">BubbleSort</button>
-      <button v-on:click="algorithmChosen='quickSort'">QuickSort</button>
-      <button v-on:click="algorithmChosen='mergeSort'">MergeSort</button>
-      <button v-on:click="sort" id="sortButton">Sort Array</button>
+      <section id="button-section">
+        <button
+          v-on:click="algorithmChosen='bogoSort'"
+          v-on:click.once="hasChosen=true"
+          v-bind:disabled="isDisabled"
+          id="bogoSort"
+        >
+          BogoSort
+        </button>
+        <button
+          v-on:click="algorithmChosen='bubbleSort'"
+          v-on:click.once="hasChosen=true"
+          v-bind:disabled="isDisabled"
+          id="bubbleSort"
+        >
+          BubbleSort
+        </button>
+        <button
+          v-on:click="algorithmChosen='quickSort'"
+          v-on:click.once="hasChosen=true"
+          v-bind:disabled="isDisabled"
+          id="quickSort"
+        >
+          QuickSort
+        </button>
+        <button
+          v-on:click="algorithmChosen='mergeSort'"
+          v-on:click.once="hasChosen=true"
+          v-bind:disabled="isDisabled"
+          id="mergeSort"
+        >
+          MergeSort
+        </button>
+        <button
+          v-on:click="algorithmChosen='heapSort'"
+          v-on:click.once="hasChosen=true"
+          v-bind:disabled="isDisabled"
+          id="heapSort"
+        >
+          HeapSort
+        </button>
+        <button v-if="hasChosen" v-on:click="sort" v-bind:disabled="isDisabled" id="sortButton">Sort Array</button>
       </section>
-    </div>
     </div>
   </body>
 </html>

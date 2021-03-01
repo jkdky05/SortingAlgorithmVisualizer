@@ -1,49 +1,80 @@
+import { bogoSort } from './algorithms/bogoSort.js';
+import { bubbleSort, swapBubbleSort } from './algorithms/bubbleSort.js';
+import { quickSort, partition, swapQuickSort } from './algorithms/quickSort.js';
+import { mergeSort, merge } from './algorithms/mergeSort.js';
+import { heapSort, heapify } from './algorithms/heapSort.js';
+
 const app = Vue.createApp({
   data() {
     return {
       list: [],
       numberItems: 0,
       algorithmChosen: '',
-      speed: 200,
+      pastAlgorithmChosen: '',
+      speed: 375,
       limitNumbers: {
         min: 2,
         max: 100,
       },
+      swapColor: 'red',
+      hasChosen: false,
+      isDisabled: false,
+      red: 'red',
+      blue: 'none rgb(27, 61, 124)',
+      partitionColor: '#a553a8',
+      yellow: 'yellow',
+      white: 'none white',
+      green: 'none green',
+      colorColumn: 'rgb(207, 125, 87)',
+      delay: '25',
     };
   },
 
   watch: {
+    speed() {
+      this.delay = 200 - (this.speed - 200);
+    },
     numberItems() {
       this.list = [];
-      if (this.numberItems > 20) {
-        setTimeout(this.hideColumnText, 2);
-      }
-      if (this.numberItems <= 20) {
-        setTimeout(this.showColumText, 2);
-      }
+      this.numberItems > 40 ? setTimeout(this.hideColumnText, 2) : setTimeout(this.showColumnText, 2);
+
       for (let i = 0; i < this.numberItems; i++) {
-        //if input is a string, i < NaN will return false
         this.list.push(Math.floor(Math.ceil(Math.random() * 100)));
       }
-      setTimeout(this.setHeightAndWidthAndBackGroundColumns, 1);
+
+      setTimeout(this.setHeightAndColorColumns, 1);
     },
+
     algorithmChosen() {
+      console.log('#' + this.algorithmChosen);
+      let element = document.querySelector('#' + this.algorithmChosen);
+
+      element.classList.add('button-selected');
+      if (this.pastAlgorithmChosen != '') {
+        element = document.querySelector('#' + this.pastAlgorithmChosen);
+        element.classList.remove('button-selected');
+      }
+      this.pastAlgorithmChosen = this.algorithmChosen;
       switch (this.algorithmChosen) {
         case 'bogoSort':
           this.limitNumbers.max = 6;
           this.numberItems = 5;
           break;
         case 'bubbleSort':
-          this.limitNumbers.max = 100;
-          this.numberItems = 30;
+          this.limitNumbers.max = 40;
+          this.numberItems = 20;
           break;
         case 'quickSort':
           this.limitNumbers.max = 100;
-          this.numberItems = 60;
+          this.numberItems = 40;
           break;
         case 'mergeSort':
-          this.limitNumbers.max = 100;
-          this.numberItems = 50;
+          this.limitNumbers.max = 80;
+          this.numberItems = 35;
+          break;
+        case 'heapSort':
+          this.limitNumbers.max = 80;
+          this.numberItems = 30;
           break;
       }
     },
@@ -52,7 +83,8 @@ const app = Vue.createApp({
   methods: {
     async sort() {
       if (!(await this.isArrayNotSorted(this.list))) return;
-      let timerId = setInterval(this.setHeightAndWidthColumns, 1);
+      this.isDisabled = true;
+      let timerId = setInterval(this.setHeightColumns, 1);
       console.log(this.algorithmChosen);
       let input = document.querySelector('#numberItem');
 
@@ -70,40 +102,40 @@ const app = Vue.createApp({
         case 'mergeSort':
           await this.mergeSort();
           break;
+        case 'heapSort':
+          await this.heapSort();
+          break;
       }
-
-      await this.sleep(500);
+      await this.sleep(0);
       clearInterval(timerId);
+
       const columns = document.querySelectorAll('li');
       for (const column of columns) {
         await this.sleep(8);
-        this.paintFinishColor(column, 'rgb(0, 81, 255)');
+        this.paintColumn(column, this.blue);
       }
-      input.disabled = false;
+      this.isDisabled = false;
     },
 
-    async paintFinishColor(e, color) {
+    async paintColumn(e, color) {
       e.style.background = color;
     },
 
-    setHeightAndWidthColumns() {
+    setHeightColumns() {
+      let h = 0;
       const columns = document.querySelectorAll('li');
-      /* console.log('setHeightAndWidthAndBackGroundColumns'); */
+      console.log(++h);
       columns.forEach((element) => {
         element.style.height = element.innerText + '%';
-        element.style.width =
-          element.parentElement.style.width / this.list.length;
       });
     },
 
-    setHeightAndWidthAndBackGroundColumns() {
+    setHeightAndColorColumns() {
       const columns = document.querySelectorAll('li');
-      /* console.log('setHeightAndWidthAndBackGroundColumns'); */
+
       columns.forEach((element) => {
         element.style.height = element.innerText + '%';
-        element.style.width =
-          element.parentElement.style.width / this.list.length;
-        element.style.background = `rgb(255, 81, 0)`;
+        element.style.background = this.colorColumn;
       });
     },
 
@@ -114,7 +146,7 @@ const app = Vue.createApp({
       });
     },
 
-    showColumText() {
+    showColumnText() {
       const columns = document.querySelectorAll('li');
       columns.forEach((element) => {
         element.style.color = 'white';
@@ -124,17 +156,17 @@ const app = Vue.createApp({
     keepPivots() {
       const columns = document.querySelectorAll('li');
       columns.forEach((element) => {
-        if (element.style.background !== 'none white')
-          element.style.background = `rgb(255, 81, 0)`;
+        if (element.style.background !== this.blue) element.style.background = this.colorColumn;
+      });
+    },
+    resetColorColumns(color = this.colorColumn) {
+      const columns = document.querySelectorAll('li');
+      columns.forEach((element) => {
+        element.style.background = color;
       });
     },
 
-    async bogoSort(array = this.list) {
-      while (await this.isArrayNotSorted(array)) {
-        console.log(this.isArrayNotSorted(array));
-        await this.shuffleArrayRandom(array);
-      }
-    },
+    bogoSort,
 
     async isArrayNotSorted(array) {
       for (let i = 1; i < array.length; i++) {
@@ -145,152 +177,30 @@ const app = Vue.createApp({
     },
 
     async shuffleArrayRandom(array) {
-      await this.sleep(200 - (this.speed - 200));
+      await this.sleep(this.delay);
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
       }
     },
 
-    async bubbleSort(array = this.list, length = array.length) {
-      const columns = document.querySelector('ul').children;
+    bubbleSort,
 
-      for (let i = 1; i < length + 1; i++) {
-        for (let index = 0; index < length - i; index++) {
-          await this.sleep(200 - (this.speed - 200));
-          await this.paintFinishColor(columns[index], 'none white');
+    swapBubbleSort,
 
-          if (array[index] > array[index + 1]) {
-            await this.swapBubbleSort(array, index, index + 1);
-          }
-          await this.sleep(200 - (this.speed - 200));
-          await this.paintFinishColor(columns[index], 'none rgb(255, 81, 0)');
-          await this.sleep(200 - (this.speed - 200));
-          await this.paintFinishColor(columns[index + 1], 'none white');
+    quickSort,
 
-          console.log('index ' + index);
-          console.log('i ' + i);
-        }
-      }
-      await this.paintFinishColor(columns[0], 'none white');
-    },
+    partition,
 
-    async swapBubbleSort(array, index, nextIndex) {
-      await this.sleep(200 - (this.speed - 200));
-      let temp = array[index];
-      array[index] = array[nextIndex];
-      array[nextIndex] = temp;
-    },
+    swapQuickSort,
 
-    async quickSort(array = this.list, first = 0, last = this.list.length - 1) {
-      if (first < last) {
-        const stepCounter = { counter: 0 };
-        let indexPartition = await this.partition(
-          array,
-          first,
-          last,
-          stepCounter
-        );
-        console.log(stepCounter.counter);
-        await this.sleep(200 - (this.speed - 200));
+    mergeSort,
 
-        await this.quickSort(
-          array,
-          first,
-          indexPartition - 1,
-          last - stepCounter.counter - 1
-        );
-        await this.quickSort(array, indexPartition + 1, last);
-      }
-    },
+    merge,
 
-    async partition(array, first, last, stepCounter) {
-      let pivot = array[last];
-      let i = first;
-      let j = last;
-      const elements = document.querySelector('ul').children;
+    heapSort,
 
-      for (let jojo = first; jojo <= last; jojo++) {
-        await this.paintFinishColor(elements.item(jojo), 'green');
-      }
-      while (i < j) {
-        if (array[i] > pivot) {
-          pivotElement = elements.item(last - stepCounter.counter);
-          await this.sleep(200 - (this.speed - 200));
-          await this.paintFinishColor(pivotElement, 'none white');
-
-          await this.swapQuickSort(array, i, j, pivot);
-          stepCounter.counter++;
-          await this.sleep(200 - (this.speed - 200));
-          await this.paintFinishColor(pivotElement, 'none rgb(255, 81, 0)');
-          pivotElement = elements.item(last - stepCounter.counter);
-          await this.paintFinishColor(pivotElement, 'none white');
-          j--;
-        } else i++;
-      }
-      this.keepPivots();
-      console.log('j: ' + j);
-      return j;
-    },
-
-    async swapQuickSort(array, i, j, pivot) {
-      await this.sleep(200 - (this.speed - 200));
-      let temp = array[i];
-      array[i] = array[j - 1];
-      array[j - 1] = pivot;
-      array[j] = temp;
-    },
-
-    async mergeSort(arr = this.list, first = 0, last = this.list.length - 1) {
-      if (first < last) {
-        let middle = Math.floor(first + (last - first) / 2);
-
-        await this.mergeSort(arr, first, middle);
-        await this.mergeSort(arr, middle + 1, last);
-
-        await this.merge(arr, first, middle, last);
-      }
-    },
-
-    async merge(arr, first, middle, last) {
-      let nextFirst = middle + 1;
-
-      if (arr[middle] <= arr[nextFirst]) {
-        return;
-      }
-      const elements = document.querySelector('ul').children;
-
-      while (first <= middle && nextFirst <= last) {
-        if (arr[first] <= arr[nextFirst]) {
-          first++;
-        } else {
-          let value = arr[nextFirst];
-          let index = nextFirst;
-          pivotElement = elements.item(first);
-
-          while (index != first) {
-            pivotElement = elements.item(index);
-
-            await this.sleep(200 - (this.speed - 200));
-
-            await this.paintFinishColor(pivotElement, 'none white');
-
-            arr[index] = arr[index - 1];
-            index--;
-          }
-
-          await this.sleep(200 - (this.speed - 200));
-
-          pivotElement = elements.item(first);
-          await this.paintFinishColor(pivotElement, 'none white');
-          arr[first] = value;
-
-          first++;
-          middle++;
-          nextFirst++;
-        }
-      }
-    },
+    heapify,
 
     sleep(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));

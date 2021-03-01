@@ -1,0 +1,33 @@
+export async function bubbleSort(array = this.list, length = array.length) {
+  const columns = document.querySelector('ul').children;
+
+  for (let i = 1; i < length + 1; i++) {
+    for (let index = 0; index < length - i; index++) {
+      await this.sleep(this.delay);
+      this.paintColumn(columns[index], this.green);
+      this.paintColumn(columns[index + 1], this.green);
+      await this.sleep(this.delay);
+      if (array[index] > array[index + 1]) {
+        await this.swapBubbleSort(array, index, index + 1);
+      }
+
+      await this.paintColumn(columns[index], this.colorColumn);
+    }
+  }
+  await this.sleep(this.delay);
+  await this.paintColumn(columns[0], this.green);
+}
+
+export async function swapBubbleSort(array, index, nextIndex) {
+  const columns = document.querySelector('ul').children;
+  await this.sleep(this.delay);
+  let temp = array[index];
+  await this.paintColumn(columns[index], this.swapColor);
+  await this.paintColumn(columns[nextIndex], this.swapColor);
+  await this.sleep(this.delay);
+  array[index] = array[nextIndex];
+  array[nextIndex] = temp;
+  await this.sleep(this.delay);
+  await this.paintColumn(columns[index], this.green);
+  await this.paintColumn(columns[nextIndex], this.green);
+}
