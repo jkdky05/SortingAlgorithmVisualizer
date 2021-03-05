@@ -12,7 +12,7 @@ export async function mergeSort(arr = this.list, first = 0, last = this.list.len
 export async function merge(arr, first, middle, last) {
   console.log(arr, first, middle, last);
   let nextFirst = middle + 1;
-  const columns = document.querySelector('ul').children;
+  const columns = document.querySelector('ul').getElementsByTagName('li');
 
   if (arr[middle] <= arr[nextFirst]) {
     return;
@@ -55,6 +55,9 @@ export async function merge(arr, first, middle, last) {
       /* array[nextFirst - 1] = auxiliar2; */
 
       await this.paintColumn(nextFirstElement, this.green);
+      let canvas = document.getElementById('canvas');
+      let ctx = canvas.getContext('2d');
+      this.drawElipse(canvas, ctx, first, nextFirst);
 
       await this.sleep(this.delay);
 
@@ -64,6 +67,7 @@ export async function merge(arr, first, middle, last) {
       ]);
 
       await this.sleep(this.delay);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       let largo = auxiliarArray.length;
       for (let step = first, iteration = 0; step <= nextFirst; step++) {

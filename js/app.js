@@ -184,6 +184,42 @@ const app = Vue.createApp({
       }
     },
 
+    drawElipse(canvas, ctx, index, nextIndex) {
+      const columns = document.querySelector('ul').getElementsByTagName('li');
+      const columnsContainer = document.querySelector('ul');
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let midX = Math.floor((columns[index].offsetLeft + columns[nextIndex].offsetLeft) / 2);
+      let midY = Math.floor((columns[index].offsetTop + columns[nextIndex].offsetTop) / 2);
+
+      let realX = Math.floor((canvas.width * midX) / columnsContainer.clientWidth);
+      let realY = Math.floor((canvas.height * midY) / columnsContainer.clientHeight);
+      console.log('real X e Y:', realX, realY);
+      let indexX = Math.floor((canvas.width * columns[index].offsetLeft) / columnsContainer.clientWidth);
+      let indexY = Math.floor((canvas.height * columns[index].offsetTop) / columnsContainer.clientHeight);
+      let nextX = Math.floor((canvas.width * columns[nextIndex].offsetLeft) / columnsContainer.clientWidth);
+      let nextY = Math.floor((canvas.height * columns[nextIndex].offsetTop) / columnsContainer.clientHeight);
+
+      let radiusX = Math.sqrt(Math.pow(realX - indexX, 2));
+      let radiusY = Math.sqrt(Math.pow(realY - indexY, 2));
+
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = 'blue';
+      if (this.algorithmChosen === ('bubbleSort' || 'mergeSort')) {
+        //The swaps with columns next to each other
+        ctx.moveTo(indexX + radiusX, indexY);
+
+        ctx.quadraticCurveTo(nextX, -0.5 * (indexY + radiusY), nextX + radiusX, nextY);
+      } else {
+        //The swaps with columns that aren't neighbors
+        ctx.moveTo(indexX + columns[index].clientWidth / 2, indexY);
+        ctx.quadraticCurveTo(nextX, -0.5 * (indexY + radiusY), nextX + columns[nextIndex].clientWidth / 2, nextY);
+      }
+      ctx.stroke();
+    },
+
     bubbleSort,
 
     swapBubbleSort,

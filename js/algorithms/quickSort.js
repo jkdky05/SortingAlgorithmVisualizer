@@ -12,7 +12,7 @@ export async function partition(array, first, last, stepCounter) {
   let pivot = array[last];
   let i = first;
   let j = last;
-  const elements = document.querySelector('ul').children;
+  const elements = document.querySelector('ul').getElementsByTagName('li');
 
   for (let partitionColumn = first; partitionColumn <= last; partitionColumn++) {
     await this.paintColumn(elements.item(partitionColumn), this.partitionColor);
@@ -60,7 +60,12 @@ export async function partition(array, first, last, stepCounter) {
 }
 
 export async function swapQuickSort(array, i, j, pivot) {
-  const elements = document.querySelector('ul').children;
+  const elements = document.querySelector('ul').getElementsByTagName('li');
+
+  let canvas = document.getElementById('canvas');
+  let ctx = canvas.getContext('2d');
+  this.drawElipse(canvas, ctx, i, j);
+
   await this.sleep(this.delay);
   let pivotElement = elements.item(i);
   await this.paintColumn(pivotElement, this.swapColor);
@@ -68,6 +73,7 @@ export async function swapQuickSort(array, i, j, pivot) {
   pivotElement = elements.item(j);
   await this.paintColumn(pivotElement, this.swapColor);
   await this.sleep(this.delay);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   [array[i], array[j - 1], array[j]] = [array[j - 1], pivot, array[i]];
   pivotElement = elements.item(i);
   await this.paintColumn(pivotElement, this.partitionColor);
